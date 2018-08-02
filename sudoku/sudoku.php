@@ -304,8 +304,8 @@ function solve11(&$sudoku) {
 }
 
 function solve_rec($sudoku) {
-	solve($sudoku);
-	done($sudoku);
+//	solve($sudoku);
+//	done($sudoku);
 	$var = variants($sudoku);
 	$min = 10;
 	$mi = -1;
@@ -321,10 +321,14 @@ function solve_rec($sudoku) {
 			}
 		}
 	}
+	if ($min == 10) {
+		done($sudoku);
+		return;
+	}
 	foreach ($var[$mi][$mj] as $v) {
-		$sudoku[$i][$j] = $v;
+		$sudoku[$mi][$mj] = $v;
 		solve_rec($sudoku);
-		$sudoku[$i][$j] = -1;
+		$sudoku[$mi][$mj] = -1;
 	}
 }
 
@@ -341,6 +345,4 @@ echo toString($sudoku);
 echo "===\n\n";
 //var_dump(variants($sudoku));
 solve_rec($sudoku);
-var_dump(validate($sudoku));
-echo toString($sudoku);
 
